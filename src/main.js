@@ -6,12 +6,6 @@ import router from './router'
 
 Vue.config.productionTip = false
 
-Vue.directive('rainbow', {
-  bind: function(el,binding,vnode){
-    el.style.color = '#' + Math.random().toString(16).slice(2,8)
-  }
-})
-
 Vue.directive('theme', {
   bind: function(el,binding,vnode){
     if (binding.value === 'wide') {

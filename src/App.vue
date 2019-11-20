@@ -1,12 +1,17 @@
 <template>
   <div id="app">
+    <blog-header></blog-header>
     <router-view/>
   </div>
 </template>
 
 <script>
+import BlogHeader from '@/components/BlogHeader'
 export default {
-  name: 'App'
+  name: 'App',
+  components: {
+    BlogHeader
+  }
 }
 </script>
 
