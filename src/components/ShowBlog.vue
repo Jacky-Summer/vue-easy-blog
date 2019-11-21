@@ -11,7 +11,7 @@
         <router-link :to="'/blog/' + blog.id">
            <h3 v-rainbow>{{ blog.title | toUpperCase}}</h3>
         </router-link>
-        <p>{{ blog.body }}</p>
+        <p>{{ blog.content }}</p>
       </article>
   </div>
 </template>
@@ -47,10 +47,17 @@ export default {
     }
   },
   created () {
-    axios.get('https://jsonplaceholder.typicode.com/posts')
+    axios.get('/posts.json')
         .then(res => {
             if (res) {
-                this.blogs = res.data.slice(0,10)
+              const blogs = res.data
+              let blogsArray = [];
+
+              for(let key in blogs){
+                blogs[key].id = key;
+                blogsArray.push(blogs[key])
+              }
+              this.blogs = blogsArray
             }
         })
   }

@@ -3,7 +3,9 @@
 import Vue from 'vue'
 import App from './App'
 import router from './router'
+import axios from 'axios'
 
+axios.defaults.baseURL = 'https://easy-blog-9ae62.firebaseio.com'
 Vue.config.productionTip = false
 
 Vue.directive('theme', {

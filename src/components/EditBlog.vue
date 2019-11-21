@@ -1,6 +1,6 @@
 <template>
-  <div id="add-blog">
-    <h2>添加博客</h2>
+  <div id="edit-blog">
+    <h2>修改博客</h2>
     <form v-if="!submited">
         <div>
             <label for="">博客标题</label>
@@ -31,13 +31,11 @@
                 </option>
             </select>
         </div>
-        <button @click.prevent="post">添加博客</button>
+        <button @click.prevent="modify">修改博客</button>
     </form>
-
     <div v-if="submited">
-        <h3>添加博客成功!</h3>
+        <h3>修改博客成功!</h3>
     </div>
-
     <div id="preview">
         <h2>博客总览</h2>
         <p> 博客标题: {{ blog.title }}</p>
@@ -51,46 +49,47 @@
         </p>
         <p> 作者: {{ blog.author }}</p>
     </div>
+    
   </div>
 </template>
 
 <script>
 import axios from 'axios'
 export default {
-  name: 'add-blog',
+  name: 'edit-blog',
   data () {
     return {
-      blog: {
-        title: "",
-        content: "",
-        categories: [],
-        author: ""
-      },
-      authors: ['jacky','monkey','hougelin'],
-      submited: false
+        blog: {},
+        authors: ['jacky','monkey','hougelin'],
+        submited: false
     }
   },
   methods: {
-    post () {
-      axios.post('/posts.json', this.blog)
+    modify () {
+      axios.put('/posts/' + this.$route.params.id + '.json',this.blog)
         .then(res=>{
-            console.log(res)
             this.submited = true
         })
     }
+  },
+  created () {
+    axios.get('/posts/' + this.$route.params.id + '.json')
+        .then(res => {
+            this.blog = res.data
+        })
   }
 }
 </script>
 
 <style scoped>
-#add-blog{
+#edit-blog{
     box-sizing: border-box;
 }
-#add-blog{
+#edit-blog{
     max-width: 600px;
     margin: auto;
 }
-#add-blog h2{
+#edit-blog h2{
     text-align: center;
 }
 label{
@@ -98,7 +97,7 @@ label{
     margin: 10px 0 10px 0;
     font-size: 16px;
 }
-#add-blog input[type="text"], select, textarea{
+#edit-blog input[type="text"], select, textarea{
     display: block;
     width: 100%;
     padding: 8px;
